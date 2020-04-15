@@ -41,7 +41,7 @@ class YearComponent extends Component{
         <div id="date">
             {
                 this.state.yearList.map(item => {
-                if(item == parseInt(this.props.year)){
+                if(item == parseInt(this.props.selected)){
                     classList = "year-btn selected";
                 }
                 else{

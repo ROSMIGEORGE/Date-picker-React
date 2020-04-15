@@ -27,7 +27,7 @@ class DatePicker extends Component {
         super(props);
         this.componentReference = React.createRef();
         this.state = {
-            s_date: new Date(this.props.selected),
+            s_date: this.props.selected?  new Date(this.props.selected):new Date(this.props.end),
             start_d: new Date(this.props.start),
             end_d: new Date(this.props.end),
             default_d: this.props.selected?  new Date(this.props.selected):new Date(this.props.end),
@@ -63,10 +63,13 @@ class DatePicker extends Component {
         }
     }
 
+    updateInputfield = () => {
+        INPUT_FIELD.inputElement.value = this.state.s_date;
+        TestUtils.Simulate.change(INPUT_FIELD.inputElement);
+    }
     closeDatePicker = (value) => {
         if(value){
-            INPUT_FIELD.inputElement.value = this.state.default_d;
-            TestUtils.Simulate.change(INPUT_FIELD.inputElement);
+           this.updateInputfield();
         }
         this.setState({
             show: false
@@ -74,16 +77,19 @@ class DatePicker extends Component {
     }
 
     updateDisplay = () => {
+        if(INPUT_FIELD.inputElement.value){
+            this.updateInputfield();
+        }
         let temp;
         if(this.state.flag === '100')
             {
-                temp = <YearComponent year= {this.state.default_d.getFullYear()} changeHandler={this.yearUpdateHandler}/>
+                temp = <YearComponent year= {this.state.default_d.getFullYear()} selected={this.state.s_date.getFullYear()} changeHandler={this.yearUpdateHandler}/>
             }
         else if(this.state.flag === '010'){
-                temp = <MonthComponent month={this.state.default_d.getMonth()} changeHandler={this.monthUpdateHandler}/>
+                temp = <MonthComponent month={this.state.default_d.getMonth()} selected={this.state.s_date.getMonth()} changeHandler={this.monthUpdateHandler}/>
         }
         else{
-            temp =  <DateComponent date={this.state.default_d} changeHandler={this.dateUpdateHandler}/> 
+            temp =  <DateComponent date={this.state.default_d} selected={this.state.s_date} changeHandler={this.dateUpdateHandler}/> 
         }
         this.setState({
             displayJSX: temp
@@ -94,7 +100,8 @@ class DatePicker extends Component {
         let yy = e.target.getAttribute('value');
         this.setState({
             flag: '010',
-            default_d: new Date(this.state.default_d.setFullYear(yy))
+            default_d: new Date(this.state.default_d.setFullYear(yy)),
+            s_date: new Date(this.state.s_date.setFullYear(yy))
         },this.updateDisplay);
     }
 
@@ -102,14 +109,16 @@ class DatePicker extends Component {
         let mm = e.target.getAttribute('value');
         this.setState({
             flag: '001',
-            default_d: new Date(this.state.default_d.setMonth(mm))
+            default_d: new Date(this.state.default_d.setMonth(mm)),
+            s_date: new Date(this.state.s_date.setMonth(mm))
         },this.updateDisplay);
     }
 
     dateUpdateHandler = (e) => {
         let dd = e.target.getAttribute('value');
         this.setState({
-            default_d: new Date(this.state.default_d.setDate(dd))
+            default_d: new Date(this.state.default_d.setDate(dd)),
+            s_date: new Date(this.state.s_date.setDate(dd))
         },this.closeDatePicker(this.state.default_d));
     }
 
@@ -180,8 +189,8 @@ class DatePicker extends Component {
                             <div id="date" className="date-head">
                                 <div id="date" className="nav-arrow-btn" onClick={this.navigate_Left}><span id="date" className="material-icons">navigate_before</span></div>
                                 <div id="date" style={{width: "60%",float: "left",lineHeight: "28px"}}>
-                                    <div id="date" className="display-month" onClick = {this.showMonth}>{month[this.state.default_d.getMonth()]},</div>
-                                    <div id="date" className="display-year" onClick = {this.showYear}>{this.state.default_d.getFullYear()}</div>
+                                    <div id="date" className="display-month" onClick = {this.showMonth}>{month[this.state.s_date.getMonth()]},</div>
+                                    <div id="date" className="display-year" onClick = {this.showYear}>{this.state.s_date.getFullYear()}</div>
                                 </div>
                                 <div id="date" className="nav-arrow-btn" style={{}} onClick={this.navigate_right}><span id="date" className="material-icons">navigate_next</span></div>
                             </div>

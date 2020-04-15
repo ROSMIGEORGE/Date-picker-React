@@ -7,7 +7,7 @@ function MonthComponent(props){
         <div id="date">
             {
                 monthList.map((item,key) => {
-                    if(key == parseInt(props.month)){
+                    if(key == parseInt(props.selected)){
                         classList = "month-btn selected";
                     }
                     else{

@@ -11,7 +11,9 @@ class App extends Component {
         super(props);
         this.state = {
             f_date: '',
-            s_date: TODAY,
+            s_date: '',
+            start: TODAY,
+            end: TODAY
         }
     }
 
@@ -31,7 +33,7 @@ class App extends Component {
                 </div>
                 <div className="date-input-container">
                     <input className="date-input" value={this.state.f_date} onChange={this.inputHandler}/>
-                    <DatePicker selected={this.state.s_date} start={this.state.s_date} end={this.state.s_date}/>
+                    <DatePicker selected={this.state.s_date} start={this.state.start} end={this.state.end}/>
                 </div>
             </div>
         );

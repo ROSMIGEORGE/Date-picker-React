@@ -20,7 +20,6 @@ class DateComponent extends Component{
             dayList.push(currentDate.getDate());
             currentDate.setDate(currentDate.getDate() + 1);
         }
-        console.log(dayList,this.props.date)
         return dayList;
     }
 
@@ -33,14 +32,16 @@ class DateComponent extends Component{
         }
     }
     render(){
-        let dd = this.props.date.getDate();
+        const [d_default,d_selected] = [new Date(this.props.date),new Date(this.props.selected)]
+        let flag = (d_default.getMonth() == d_selected.getMonth() && d_default.getFullYear() == d_selected.getFullYear());
+        let dd = d_selected.getDate();
         let classList;
         return (
             <div id="date">
                 {
                     this.state.dateList.map((item,key)=> {
                         if(item){
-                            if(item == dd){
+                            if(item == dd && flag){
                                 classList = "date-btn selected";
                             }
                             else{
