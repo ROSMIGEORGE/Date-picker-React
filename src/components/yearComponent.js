@@ -36,11 +36,25 @@ class YearComponent extends Component{
         }
     }
     render(){
+        let classList;
     return(
         <div id="date">
             {
                 this.state.yearList.map(item => {
-                return <div id="date" key={item} className="year-btn" value={item} onClick={this.props.changeHandler}>{item}</div>
+                if(item == parseInt(this.props.year)){
+                    classList = "year-btn selected";
+                }
+                else{
+                    classList = "year-btn";
+                }
+                return <div 
+                id="date" 
+                key={item} 
+                className={classList}
+                value={item} 
+                onClick={this.props.changeHandler}>
+                    {item}
+                </div>
                 })
             }
         </div>

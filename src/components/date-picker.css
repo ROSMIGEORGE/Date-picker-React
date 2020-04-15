@@ -44,7 +44,8 @@
 .year-btn:hover,
 .month-btn:hover,
 .date-btn:hover,
-.nav-arrow-btn:hover{
+.nav-arrow-btn:hover,
+.selected{
     background-color: black;
     color:white;
     opacity: .7;

@@ -33,19 +33,29 @@ class DateComponent extends Component{
         }
     }
     render(){
+        let dd = this.props.date.getDate();
+        let classList;
         return (
             <div id="date">
                 {
                     this.state.dateList.map((item,key)=> {
-                        if(item)
+                        if(item){
+                            if(item == dd){
+                                classList = "date-btn selected";
+                            }
+                            else{
+                                classList = "date-btn";
+                            }
                         return <div id="date" 
-                                    className="date-btn" 
+                                    className={classList} 
                                     key={key} value={item} 
                                     onClick={this.props.changeHandler}>
                                         {item}
                                 </div>
-                        else
-                        return <div className="empty-date-btn"></div>
+                        }
+                        else{
+                            return <div key={key} className="empty-date-btn"></div>
+                        }
                     })
                 }
             </div>

@@ -56,15 +56,18 @@ class DatePicker extends Component {
 
     hideDatePicker = (e) => {
         if (e.target !== INPUT_FIELD.inputElement && e.target.id !== 'date') {
-            this.setState({
-                show: false
-            });
+            this.closeDatePicker(INPUT_FIELD.inputElement.value);
+            // this.setState({
+            //     show: false
+            // });
         }
     }
 
-    closeDatePicker = () => {
-        INPUT_FIELD.inputElement.value = this.state.default_d;
-        TestUtils.Simulate.change(INPUT_FIELD.inputElement);
+    closeDatePicker = (value) => {
+        if(value){
+            INPUT_FIELD.inputElement.value = this.state.default_d;
+            TestUtils.Simulate.change(INPUT_FIELD.inputElement);
+        }
         this.setState({
             show: false
         });
@@ -77,7 +80,7 @@ class DatePicker extends Component {
                 temp = <YearComponent year= {this.state.default_d.getFullYear()} changeHandler={this.yearUpdateHandler}/>
             }
         else if(this.state.flag === '010'){
-                temp = <MonthComponent changeHandler={this.monthUpdateHandler}/>
+                temp = <MonthComponent month={this.state.default_d.getMonth()} changeHandler={this.monthUpdateHandler}/>
         }
         else{
             temp =  <DateComponent date={this.state.default_d} changeHandler={this.dateUpdateHandler}/> 
@@ -107,7 +110,7 @@ class DatePicker extends Component {
         let dd = e.target.getAttribute('value');
         this.setState({
             default_d: new Date(this.state.default_d.setDate(dd))
-        },this.closeDatePicker);
+        },this.closeDatePicker(this.state.default_d));
     }
 
     showMonth = () => {
