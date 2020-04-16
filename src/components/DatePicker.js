@@ -117,8 +117,11 @@ class DatePicker extends Component {
         let dd = e.target.getAttribute('value');
         this.setState({
             default_d: new Date(this.state.default_d.setDate(dd)),
-            s_date: new Date(this.state.s_date.setDate(dd))
-        },() => {this.closeDatePicker(this.state.default_d)});
+            s_date: new Date(this.state.default_d.setDate(dd))
+        },() => {
+            this.updateDisplay();
+            this.closeDatePicker(this.state.default_d);
+        });
     }
 
     showMonth = () => {
