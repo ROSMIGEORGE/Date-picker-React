@@ -6,12 +6,6 @@ import TestUtils from 'react-dom/test-utils';
 import {Helmet} from 'react-helmet'
 import './date-picker.css'
 
-const INPUT_FIELD = {
-    inputElement: '',
-    color: '#ffffff',
-    dateElement: ''
-};
-
 const DATE_PICKER_STYLES = {
     width: "250px",
     minHeight: "210px",
@@ -26,6 +20,11 @@ class DatePicker extends Component {
     constructor(props) {
         super(props);
         this.componentReference = React.createRef();
+        this.INPUT_FIELD = {
+            inputElement: '',
+            color: '#ffffff',
+            dateElement: ''
+        };
         this.state = {
             s_date: this.props.selected?  new Date(this.props.selected):new Date(this.props.end),
             start_d: new Date(this.props.start),
@@ -38,13 +37,13 @@ class DatePicker extends Component {
     }
 
     getInputfield = () => {
-        INPUT_FIELD.dateElement = this.componentReference.current;
-        INPUT_FIELD.inputElement = this.componentReference.current.parentElement.getElementsByTagName('input')[0];
-        DATE_PICKER_STYLES.width = INPUT_FIELD.inputElement.offsetWidth;
+        this.INPUT_FIELD.dateElement = this.componentReference.current;
+        this.INPUT_FIELD.inputElement = this.componentReference.current.parentElement.getElementsByTagName('input')[0];
+        DATE_PICKER_STYLES.width = this.INPUT_FIELD.inputElement.offsetWidth;
     }
 
     addWatcher = () => {
-        INPUT_FIELD.inputElement.addEventListener("focus", this.showDatePicker);
+        this.INPUT_FIELD.inputElement.addEventListener("focus", this.showDatePicker);
         document.addEventListener("click", this.hideDatePicker);
     }
 
@@ -55,8 +54,8 @@ class DatePicker extends Component {
     }
 
     hideDatePicker = (e) => {
-        if (e.target !== INPUT_FIELD.inputElement && e.target.id !== 'date') {
-            this.closeDatePicker(INPUT_FIELD.inputElement.value);
+        if (e.target !== this.INPUT_FIELD.inputElement && e.target.id !== 'date') {
+            this.closeDatePicker(this.INPUT_FIELD.inputElement.value);
             // this.setState({
             //     show: false
             // });
@@ -64,8 +63,8 @@ class DatePicker extends Component {
     }
 
     updateInputfield = () => {
-        INPUT_FIELD.inputElement.value = this.state.s_date;
-        TestUtils.Simulate.change(INPUT_FIELD.inputElement);
+        this.INPUT_FIELD.inputElement.value = this.state.s_date;
+        TestUtils.Simulate.change(this.INPUT_FIELD.inputElement);
     }
     closeDatePicker = (value) => {
         if(value){
@@ -77,13 +76,13 @@ class DatePicker extends Component {
     }
 
     updateDisplay = () => {
-        if(INPUT_FIELD.inputElement.value){
+        if(this.INPUT_FIELD.inputElement.value){
             this.updateInputfield();
         }
         let temp;
         if(this.state.flag === '100')
             {
-                temp = <YearComponent year= {this.state.default_d.getFullYear()} selected={this.state.s_date.getFullYear()} changeHandler={this.yearUpdateHandler}/>
+                temp = <YearComponent year= {this.state.default_d.getFullYear()} end={this.state.end_d} selected={this.state.s_date.getFullYear()} changeHandler={this.yearUpdateHandler}/>
             }
         else if(this.state.flag === '010'){
                 temp = <MonthComponent month={this.state.default_d.getMonth()} selected={this.state.s_date.getMonth()} changeHandler={this.monthUpdateHandler}/>

@@ -3,6 +3,7 @@
     margin: auto;
     min-height: 160px;
     padding-top: 10px;
+    font-family: 'Roboto', sans-serif;
 }
 .year-btn{
     width: 33%;
@@ -69,5 +70,6 @@
 .date-head{
     overflow: auto;
     border-bottom: 1px solid #c6c9ce;
-    margin: 10px 0px
+    margin: 10px 0px;
+    font-family: 'Roboto', sans-serif;
 }
