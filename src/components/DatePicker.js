@@ -187,7 +187,7 @@ class DatePicker extends Component {
                         <div id="date" style={DATE_PICKER_STYLES}>
                             <div id="date" className="date-head">
                                 <div id="date" className="nav-arrow-btn" onClick={this.navigate_Left}><span id="date" className="material-icons">navigate_before</span></div>
-                                <div id="date" style={{width: "60%",float: "left",lineHeight: "28px"}}>
+                                <div id="date" className="month-year">
                                     <div id="date" className="display-month" onClick = {this.showMonth}>{month[this.state.s_date.getMonth()]},</div>
                                     <div id="date" className="display-year" onClick = {this.showYear}>{this.state.s_date.getFullYear()}</div>
                                 </div>
