@@ -47,6 +47,11 @@ class DatePicker extends Component {
         document.addEventListener("click", this.hideDatePicker);
     }
 
+    removeWatcher = () => {
+        this.INPUT_FIELD.inputElement.removeEventListener("focus", this.showDatePicker);
+        document.removeEventListener("click", this.hideDatePicker);
+    }
+
     showDatePicker = (e) => {
         this.setState({
             show: true
@@ -177,6 +182,9 @@ class DatePicker extends Component {
         this.addWatcher();
     }
 
+    componentWillUnmount(){
+        this.removeWatcher();
+    }
     render() {
 
         return (
